@@ -2,13 +2,13 @@
 #include <iostream>
 using namespace std;
 
-void createDivTable(bool manualRound){
+void createDivTable(bool manualRound, int32_t val){
   // Output the header lines.
   cout << setw(5) << "";
   
   //Create column headers and show positive symbol for each
-  for (int32_t denom = 1; denom <= 10; ++denom) {
-    cout << setw(4) << showpos << denom;
+  for (int32_t numer = val; numer <= 10; ++numer) {
+    cout << setw(4) << showpos << numer;
   }
 
   //Create the intitial dash
@@ -16,7 +16,7 @@ void createDivTable(bool manualRound){
   cout << setfill('-') << setw(5) << "";
  
   //Fill the remaining blank space with dashes using setfill
-  for (int32_t denom = 1; denom <= 10; ++denom) {
+  for (int32_t denom = val; denom <= 10; ++denom) {
     cout << setfill('-') << setw(4) << "";
   }
   
@@ -25,11 +25,14 @@ void createDivTable(bool manualRound){
 
   int32_t result = 0;
 
-  for (int32_t numer = 1; numer <= 10; ++numer){
+  for (int32_t numer = val; numer <= 10; ++numer){
     cout << setw(3) << showpos << numer << ": ";
 
-    for (int32_t denom = 1; denom <= 10; ++denom){
-     
+    for (int32_t denom = val; denom <= 10; ++denom){
+      if (denom == 0){
+        continue;
+      }
+
       if (manualRound == false){
         result = numer/denom;
       } else {
@@ -38,22 +41,25 @@ void createDivTable(bool manualRound){
         //Adding that result back to numer and dividing the total by the original denom will effectively round
         result = (numer + (denom / 2)) / denom;
       } 
-      cout << setw(4) << result;
+        cout << setw(4) << result;
+      }
+       cout << endl;
     }
-    cout << endl;
   }
-}
 
 
 int main(){
-  cout << "Table showing truncated int div results:" << endl;
-  createDivTable(false);
+  cout << "Table showing truncated int div results 1 - 10:" << endl;
+  createDivTable(false, 1);
   cout << endl;
 
-  cout << "Table showing manually rounded int div results:" << endl;
-  createDivTable(true);
+  cout << "Table showing manually rounded int div results 1- 10:" << endl;
+  createDivTable(true, 1);
+  cout << endl;
+
+  cout << "Table showing manually rounded int div results -10 - 10:" << endl;
+  createDivTable(true, -10);
   cout << endl;
 
   return 0;
-
 }
